@@ -302,7 +302,7 @@ from PIL import Image
 
 st.markdown("### 🧊 Sketch Your Plan")
 
-col1, col2 = st.columns([1, 3])
+col1, col2, col3 = st.columns([1, 2.5, 1.5])
 
 with col1:
     st.markdown("#### 🎨 Drawing Controls")
@@ -332,7 +332,12 @@ with col2:
         width=1000,
         drawing_mode=drawing_mode,
         key="sketch-canvas-final"
-    )
+    )  # ✅ correctly closed here
+
+with col3:
+    st.markdown("#### 🧠 Reference Bubble Diagram")
+    draw_interactive(user_df, user_adjacencies)
+
 
 # ---------- Shape Metadata + Display ----------
 if canvas_result.json_data and "objects" in canvas_result.json_data:
