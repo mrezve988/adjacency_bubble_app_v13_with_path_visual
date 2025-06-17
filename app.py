@@ -370,14 +370,18 @@ if canvas_result.json_data and "objects" in canvas_result.json_data:
             height = obj.get("height", 0)
             area = width * height / 100
             cost = area * cost_per_sqft
-            object_details.append(f"{color_icon} {name} ({zoning_type}) - Rect Area: {area:.2f} sqft")
+            object_details.append(
+    f"{color_icon} {name} ({zoning_type}) – Rect Area: {area:.2f} sqft – Est. Cost: ${cost:,.2f}"
+)
             total_area += area
             total_cost += cost
         elif shape == "circle":
             radius = obj.get("radius", 0)
             area = math.pi * radius**2 / 100
             cost = area * cost_per_sqft
-            object_details.append(f"{color_icon} {name} ({zoning_type}) - Circle Area: {area:.2f} sqft")
+            object_details.append(
+    f"{color_icon} {name} ({zoning_type}) – Rect Area: {area:.2f} sqft – Est. Cost: ${cost:,.2f}"
+)
             total_area += area
             total_cost += cost
         elif shape == "path":
