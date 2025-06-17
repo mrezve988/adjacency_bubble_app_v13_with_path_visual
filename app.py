@@ -321,6 +321,8 @@ with col1:
     st.markdown("#### 📏 Room Details")
     total_area = 0.0
     object_details = []
+    total_cost = 0.0
+cost_per_sqft = 162  # 2024 construction rate from NAHB
 
 with col2:
     canvas_result = st_canvas(
@@ -367,13 +369,17 @@ if canvas_result.json_data and "objects" in canvas_result.json_data:
             width = obj.get("width", 0)
             height = obj.get("height", 0)
             area = width * height / 100
+            cost = area * cost_per_sqft
             object_details.append(f"{color_icon} {name} ({zoning_type}) - Rect Area: {area:.2f} sqft")
             total_area += area
+            total_cost += cost
         elif shape == "circle":
             radius = obj.get("radius", 0)
             area = math.pi * radius**2 / 100
+            cost = area * cost_per_sqft
             object_details.append(f"{color_icon} {name} ({zoning_type}) - Circle Area: {area:.2f} sqft")
             total_area += area
+            total_cost += cost
         elif shape == "path":
             object_details.append(f"{color_icon} {name} ({zoning_type}) - Freehand (area not calculated)")
 
@@ -381,6 +387,7 @@ if canvas_result.json_data and "objects" in canvas_result.json_data:
         for detail in object_details:
             st.markdown(detail)
         st.markdown(f"#### 📐 Total Plan Area: **{total_area:.2f} sqft**")
+        st.markdown(f"#### 💵 Estimated Construction Cost: **${total_cost:,.2f}**")
 
     # ---------- Plotly Preview with Download (Room Name + Area) ----------
     fig = go.Figure()
